@@ -27,7 +27,10 @@ BuildRequires:	lcms2-devel >= 2.2
 BuildRequires:	libtool >= 2:2.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.644
-%{?with_vala:BuildRequires:	vala}
+%if %{with vala}
+BuildRequires:	vala
+BuildRequires:	vala-colord >= %{version}
+%endif
 Requires:	colord-libs >= %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
