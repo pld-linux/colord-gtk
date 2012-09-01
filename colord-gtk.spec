@@ -8,7 +8,7 @@ Summary:	GTK helper library for colord
 Summary(pl.UTF-8):	Biblioteka pomocniczna GTK dla colord
 Name:		colord-gtk
 Version:	0.1.23
-Release:	1
+Release:	2
 License:	GPL v2+ and LGPL v2+
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
