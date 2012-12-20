@@ -4,19 +4,20 @@
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	vala		# don't build Vala API
 #
+%define	colord_ver	0.1.23
 Summary:	GTK helper library for colord
 Summary(pl.UTF-8):	Biblioteka pomocniczna GTK dla colord
 Name:		colord-gtk
-Version:	0.1.23
-Release:	3
+Version:	0.1.24
+Release:	1
 License:	GPL v2+ and LGPL v2+
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	019fa6f9349ef39d1bd28c3dcf6fb191
+# Source0-md5:	c2c63d7da6e9d512cc95c676661e35f0
 URL:		http://www.freedesktop.org/software/colord/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
-BuildRequires:	colord-devel >= %{version}
+BuildRequires:	colord-devel >= %{colord_ver}
 BuildRequires:	gettext-devel >= 0.17
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gobject-introspection-devel >= 0.9.8
@@ -29,9 +30,9 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.644
 %if %{with vala}
 BuildRequires:	vala
-BuildRequires:	vala-colord >= %{version}
+BuildRequires:	vala-colord >= %{colord_ver}
 %endif
-Requires:	colord-libs >= %{version}
+Requires:	colord-libs >= %{colord_ver}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -45,7 +46,7 @@ Summary:	Header files for colord-gtk library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki colord-gtk
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	colord-devel >= %{version}
+Requires:	colord-devel >= %{colord_ver}
 Requires:	gtk+3-devel >= 3.0
 
 %description devel
@@ -83,7 +84,7 @@ Summary:	colord-gtk API for Vala language
 Summary(pl.UTF-8):	API colord-gtk dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala-colord >= %{version}
+Requires:	vala-colord >= %{colord_ver}
 
 %description -n vala-colord-gtk
 colord-gtk API for Vala language.
@@ -105,6 +106,7 @@ API colord-gtk dla języka Vala.
 	--disable-silent-rules \
 	%{__enable_disable apidocs gtk-doc} \
 	%{__enable_disable static_libs static} \
+	%{?with_vala:--enable-vala} \
 	--with-html-dir=%{_gtkdocdir}
 
 %{__make}
