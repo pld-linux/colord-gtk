@@ -109,7 +109,8 @@ API colord-gtk dla języka Vala.
 	%{?with_vala:--enable-vala} \
 	--with-html-dir=%{_gtkdocdir}
 
-%{__make}
+# docs build seems racy
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -119,7 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-# only empty translation exists atm. (as of 0.1.22)
+# only empty translation exists atm. (as of 0.1.25)
 #find_lang %{name}
 
 %clean
