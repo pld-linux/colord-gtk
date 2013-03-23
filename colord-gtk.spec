@@ -4,16 +4,16 @@
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	vala		# don't build Vala API
 #
-%define	colord_ver	0.1.23
+%define	colord_ver	0.1.27
 Summary:	GTK helper library for colord
 Summary(pl.UTF-8):	Biblioteka pomocniczna GTK dla colord
 Name:		colord-gtk
-Version:	0.1.24
+Version:	0.1.25
 Release:	1
 License:	GPL v2+ and LGPL v2+
 Group:		Libraries
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	c2c63d7da6e9d512cc95c676661e35f0
+# Source0-md5:	f3ad262c060fc50c10805b744be7479d
 URL:		http://www.freedesktop.org/software/colord/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
