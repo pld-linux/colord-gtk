@@ -19,7 +19,7 @@ URL:		http://www.freedesktop.org/software/colord/
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	colord-devel >= %{colord_ver}
-BuildRequires:	gettext-devel >= 0.17
+BuildRequires:	gettext-tools >= 0.17
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gobject-introspection-devel >= 0.9.8
 %{?with_gtk2:BuildRequires:	gtk+2-devel >= 2.0}
