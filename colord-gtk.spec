@@ -4,13 +4,13 @@
 %bcond_without	static_libs	# don't build static libraries
 %bcond_without	gtk2		# additional GTK+ 2.x version of library
 %bcond_without	vala		# don't build Vala API
-#
+
 %define	colord_ver	0.1.27
 Summary:	GTK helper library for colord
 Summary(pl.UTF-8):	Biblioteka pomocniczna GTK dla colord
 Name:		colord-gtk
 Version:	0.1.26
-Release:	3
+Release:	4
 License:	LGPL v2.1+ (library), GPL v2+ (cd-convert utility)
 Group:		X11/Libraries
 Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
@@ -89,6 +89,9 @@ Summary(pl.UTF-8):	API colord-gtk dla języka Vala
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala-colord >= %{colord_ver}
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description -n vala-colord-gtk
 colord-gtk API for Vala language.
@@ -177,6 +180,7 @@ rm -rf $RPM_BUILD_ROOT
 %postun	-n colord-gtk2 -p /sbin/ldconfig
 
 %files
+%defattr(644,root,root,755)
 # -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS MAINTAINERS NEWS README TODO
