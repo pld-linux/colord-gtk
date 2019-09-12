@@ -1,23 +1,21 @@
 #
 # Conditional build:
-%bcond_without	apidocs		# do not build and package API docs
-%bcond_without	static_libs	# don't build static libraries
+%bcond_without	apidocs		# API documentation
+%bcond_without	static_libs	# static libraries
 %bcond_without	gtk2		# additional GTK+ 2.x version of library
-%bcond_without	vala		# don't build Vala API
+%bcond_without	vala		# Vala API
 
 %define	colord_ver	0.1.27
 Summary:	GTK helper library for colord
 Summary(pl.UTF-8):	Biblioteka pomocniczna GTK dla colord
 Name:		colord-gtk
-Version:	0.1.26
-Release:	5
+Version:	0.2.0
+Release:	1
 License:	LGPL v2.1+ (library), GPL v2+ (cd-convert utility)
 Group:		X11/Libraries
-Source0:	http://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	bb9d6f3c037152ad791003375aa6c16c
-URL:		http://www.freedesktop.org/software/colord/
-BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake >= 1:1.9
+Source0:	https://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
+# Source0-md5:	66d048803c8b89e5e63da4b461484933
+URL:		https://www.freedesktop.org/software/colord/
 BuildRequires:	colord-devel >= %{colord_ver}
 BuildRequires:	gettext-tools >= 0.17
 BuildRequires:	glib2-devel >= 1:2.28.0
@@ -25,11 +23,12 @@ BuildRequires:	gobject-introspection-devel >= 0.9.8
 %{?with_gtk2:BuildRequires:	gtk+2-devel >= 2.0}
 BuildRequires:	gtk+3-devel >= 3.0
 BuildRequires:	gtk-doc >= 1.9
-BuildRequires:	intltool >= 0.40.0
 BuildRequires:	lcms2-devel >= 2.2
-BuildRequires:	libtool >= 2:2.0
+BuildRequires:	meson >= 0.46.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.644
+BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	sed >= 4.0
 %if %{with vala}
 BuildRequires:	vala
 BuildRequires:	vala-colord >= %{colord_ver}
@@ -144,31 +143,21 @@ Statyczna biblioteka colord-gtk2.
 %prep
 %setup -q
 
-%build
-%{__intltoolize}
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--disable-silent-rules \
-	%{__enable_disable apidocs gtk-doc} \
-	%{?with_gtk2:--enable-gtk2} \
-	%{__enable_disable static_libs static} \
-	%{?with_vala:--enable-vala} \
-	--with-html-dir=%{_gtkdocdir}
+%if %{with static_libs}
+%{__sed} -i -e 's/ = shared_library/ = library/' libcolord-gtk/meson.build
+%endif
 
-# docs build seems racy
-%{__make} -j1
+%build
+%meson build \
+	-Dgtk2=true \
+	-Dvapi=true
+
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%ninja_install -C build
 
 # only empty translation exists atm. (as of 0.1.26)
 #find_lang %{name}
@@ -216,6 +205,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with vala}
 %files -n vala-colord-gtk
 %defattr(644,root,root,755)
+%{_datadir}/vala/vapi/colord-gtk.deps
 %{_datadir}/vala/vapi/colord-gtk.vapi
 %endif
 
