@@ -75,9 +75,7 @@ Summary:	colord-gtk API documentation
 Summary(pl.UTF-8):	Dokumentacja API colord-gtk
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 colord-gtk API documentation.
@@ -91,9 +89,7 @@ Summary(pl.UTF-8):	API colord-gtk dla języka Vala
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala-colord >= %{colord_ver}
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n vala-colord-gtk
 colord-gtk API for Vala language.
