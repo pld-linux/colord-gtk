@@ -227,6 +227,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	-n colord-gtk2 -p /sbin/ldconfig
 %postun	-n colord-gtk2 -p /sbin/ldconfig
 
+%post	-n colord-gtk4 -p /sbin/ldconfig
+%postun	-n colord-gtk4 -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 # -f %{name}.lang
