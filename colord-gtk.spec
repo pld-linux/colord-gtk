@@ -10,12 +10,12 @@
 Summary:	GTK helper library for colord
 Summary(pl.UTF-8):	Biblioteka pomocniczna GTK dla colord
 Name:		colord-gtk
-Version:	0.3.0
+Version:	0.3.1
 Release:	1
 License:	LGPL v2.1+ (library), GPL v2+ (cd-convert utility)
 Group:		X11/Libraries
 Source0:	https://www.freedesktop.org/software/colord/releases/%{name}-%{version}.tar.xz
-# Source0-md5:	08c245d6482b3923a2b6a09f7fbbe612
+# Source0-md5:	d436740c06e42af421384f16b2a9a0a7
 URL:		https://www.freedesktop.org/software/colord/
 BuildRequires:	colord-devel >= %{colord_ver}
 BuildRequires:	gettext-tools >= 0.17
@@ -215,8 +215,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %ninja_install -C build
 
-# only empty translation exists atm. (as of 0.1.26)
-#find_lang %{name}
+%find_lang %{name}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -230,9 +229,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	-n colord-gtk4 -p /sbin/ldconfig
 %postun	-n colord-gtk4 -p /sbin/ldconfig
 
-%files
-%defattr(644,root,root,755)
-# -f %{name}.lang
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS MAINTAINERS NEWS README TODO
 %attr(755,root,root) %{_bindir}/cd-convert
